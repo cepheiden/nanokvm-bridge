@@ -177,6 +177,13 @@ bridge) → `S30rndis` (its `10.x` DHCP server gets stopped by the watcher) →
 
 ## Caveats
 
+- **Speed:** the PC's network runs over USB 2.0 (480 Mbit/s raw, real throughput of
+  the USB network is lower). On the tested device the KVM's Ethernet port also
+  links at only 100 Mbit. Don't expect gigabit, this is meant for normal internet
+  access, updates and remote work.
+- **CPU load:** every packet is bridged by the NanoKVM's single CPU core, which also
+  encodes the video stream. CPU load rises with network traffic, and during large
+  downloads the KVM picture can get less smooth.
 - The modules are built out-of-tree with stock gcc 10.2 instead of Sipeed's
   Xuantie toolchain. The kernel has no `MODVERSIONS`, so a module whose config does
   not match can crash the kernel. That is why the build script checks the config
