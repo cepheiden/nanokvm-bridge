@@ -171,6 +171,9 @@ bridge) → `S30rndis` (its `10.x` DHCP server gets stopped by the watcher) →
   from other LAN hosts. USB HID enumerated and HDMI ran at 1080p. Reboots: the
   bridge came up every time.
 - Host mode with CH334 + SR9900: the PC behind the adapter got a DHCP lease.
+- Tailscale on the KVM keeps working with the bridge. It only uses the KVM's IP and
+  default route, and the bridge keeps both. Tailscale reaches the KVM, not the PC
+  behind it. To reach the PC remotely, install Tailscale on the PC itself.
 - **Not** tested: the loop guard against a real loop, unplugging and re-plugging a
   USB Ethernet adapter, other NanoKVM models (PCIe, Pro), other firmware images,
   throughput (the LAN port is 100 Mbit anyway).
@@ -207,6 +210,11 @@ bridge) → `S30rndis` (its `10.x` DHCP server gets stopped by the watcher) →
 - Debian bullseye's security repo moved to `archive.debian.org`.
 - Colima on macOS only mounts `$HOME`, so keep the repo there.
 - The SDK commit is pinned (`SDK_REF` in `build/build-modules.sh`).
+
+## Discussion
+
+Questions and feedback, especially from other firmware versions or hardware:
+[r/Sipeed thread](https://www.reddit.com/r/Sipeed/comments/1xzp71w/nanokvm_only_one_lan_cable_at_the_remote_pc_now/).
 
 ## License
 
