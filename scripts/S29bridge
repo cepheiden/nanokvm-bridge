@@ -1,0 +1,15 @@
+#!/bin/sh
+# NanoKVM bridge: eth0 becomes a bridge of lan0 (Ethernet port) + usb0 / USB Ethernet.
+# Runs before S30eth so DHCP or the static IP lands on the bridge right away.
+# Disable: delete /boot/bridge.enable and reboot.
+# Details: /etc/kvm-bridge/bridge.sh, log: /var/log/kvm-bridge.log
+
+case "$1" in
+	start|stop|restart|status)
+		/etc/kvm-bridge/bridge.sh "$1"
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac

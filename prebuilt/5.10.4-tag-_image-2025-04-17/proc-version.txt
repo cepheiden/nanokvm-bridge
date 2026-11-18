@@ -1,0 +1,1 @@
+Linux version 5.10.4-tag- (bugu@bugu-desktop) (riscv64-unknown-linux-musl-gcc (Xuantie-900 linux-5.10.4 musl gcc Toolchain V2.6.1 B-20220906) 10.2.0, GNU ld (GNU Binutils) 2.35) #46 PREEMPT Thu Apr 17 14:17:49 CST 2025
