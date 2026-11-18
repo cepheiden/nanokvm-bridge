@@ -1,6 +1,8 @@
 # Agent playbook: NanoKVM layer-2 bridge
 
-You are setting up this repository on the user's Sipeed NanoKVM. The goal: `eth0`
+You are setting up this repository on the user's Sipeed NanoKVM. Typical situation:
+there is only one LAN cable at the remote PC, it goes into the KVM, and the PC still
+needs internet through the KVM's USB cable. The goal: `eth0`
 becomes a bridge of the physical Ethernet port (renamed `lan0`) and the USB network
 (`usb0`), so the PC on the KVM's USB port gets a real LAN address, and the KVM stays
 reachable with or without USB. Read README.md for the background.

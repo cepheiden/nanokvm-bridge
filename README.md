@@ -1,5 +1,8 @@
 # nanokvm-bridge
 
+**Only one LAN cable at the remote PC? Plug it into the NanoKVM, and the PC still
+gets internet through the KVM's USB cable. No extra switch needed.**
+
 A real layer-2 bridge for the [Sipeed NanoKVM](https://github.com/sipeed/NanoKVM):
 the Ethernet port and the USB network go into one Linux bridge. The PC on the KVM's
 USB cable then sits directly in your LAN and gets its IP from your router, while
@@ -13,12 +16,25 @@ PC  ──── USB ── usb0 ───┘
          (keyboard + mouse + RNDIS network over one cable)
 ```
 
-**Why this is needed:** the stock "virtual network" puts the PC on an isolated
-`10.x.x.x/24` network with no gateway, so the PC can only talk to the KVM. Normally
-you would just bridge `eth0` and `usb0`, but the NanoKVM kernel ships without bridge
-support (`CONFIG_BRIDGE` is not set, and there are no loadable modules). This repo
-builds the missing `llc`, `stp` and `bridge` modules for the stock kernel and adds a
-boot script that sets everything up.
+## Why
+
+The situation: there is exactly **one** LAN cable at the remote PC. The NanoKVM
+needs that cable, but the PC still needs internet. Normally you would have to put
+a switch on site.
+
+With this bridge the single cable goes into the NanoKVM, and the PC gets its network
+through the USB cable it already shares with the KVM. It shows up as a normal LAN
+client with its own IP from your router.
+
+The stock firmware can't do this:
+
+- The built-in "virtual network" gives the PC only an isolated `10.x.x.x/24` address
+  with no gateway. The PC can reach the KVM and nothing else.
+- The kernel has no bridge support: `CONFIG_BRIDGE` is not set and no bridge module
+  is included.
+
+This repo builds the missing `llc`, `stp` and `bridge` modules for the stock kernel
+and adds a boot script that sets everything up.
 
 ## What you get
 
@@ -37,9 +53,10 @@ Paste this into Claude Code, Codex or any agent with a shell:
 
 ```text
 I have a Sipeed NanoKVM at <IP> (SSH user root, <SSH key or password>).
-I want the PC on its USB port to get a real LAN address from my router through
-the KVM (layer-2 bridge of Ethernet + USB network), and the KVM must stay
-reachable when nothing is on USB.
+There is only one LAN cable at the PC, and it goes into the KVM. I want the PC
+on the KVM's USB port to get a real LAN address from my router through the KVM
+(layer-2 bridge of Ethernet + USB network), and the KVM must stay reachable
+when nothing is on USB.
 Clone https://github.com/cepheiden/nanokvm-bridge and follow AGENTS.md exactly:
 recon first, use prebuilt modules only if /proc/version matches, otherwise build
 them with Docker, test with the auto-rollback trial, and ask me before every
